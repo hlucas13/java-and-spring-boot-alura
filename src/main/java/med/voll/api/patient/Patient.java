@@ -1,4 +1,4 @@
-package med.voll.api.doctor;
+package med.voll.api.patient;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,13 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.address.Address;
 
-@Table(name = "doctors")
-@Entity(name = "Doctor")
+@Table(name = "patients")
+@Entity(name = "Patient")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Doctor {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,27 +22,23 @@ public class Doctor {
     private String name;
     private String email;
     private String phone;
-    private String crm;
-
-    @Enumerated(EnumType.STRING)
-    private Speciality speciality;
+    private String cpf;
 
     @Embedded
     private Address address;
 
     private Boolean active;
 
-    public Doctor(DoctorRegisterData data) {
+    public Patient(PatientRegisterData data) {
         this.active = true;
         this.name = data.name();
         this.email = data.email();
         this.phone = data.phone();
-        this.crm = data.crm();
-        this.speciality = data.speciality();
+        this.cpf = data.cpf();
         this.address = new Address(data.address());
     }
 
-    public void updateInfo(DoctorUpdateData data) {
+    public void updateInfo(PatientUpdateData data) {
         if (data.name() != null) {
             this.name = data.name();
         }
